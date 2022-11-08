@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 3. Change the value of js variable apiUrl into your root url from /front.html and /edit.html
 4. Run yourRootURL/front.html from the browser
 
-
-
 ## PHP CRUD API
 * `GET -http://cc.local/api/read.php` Fetch ALL Records
 * `GET - http://cc.local/api/single_read.php/?id=2` Fetch Single Record

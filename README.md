@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19;
 
 2. Setup the db connection from config/database.php
-3. Change the value of js variabl apiUrl into your root url from /front.html and /edit.html
+3. Change the value of js variable apiUrl into your root url from /front.html and /edit.html
 4. Run yourRootURL/front.html from the browser
 
 

@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <style>
+      span+a {
+        display: inline-block;
+        margin-left: 1em;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for='username'>Username:</label>
+      <input type='text' id='username' name='username'>
+      <label for='email'>Email:</label>
+      <input type='text' id='email' name='email'>
+      <label for='age'>Age:</label>
+      <input type='number' id='age'  name='age'>
+      <label for='designation'>Position:</label>
+      <input type='text' id='designation' name='designation'>
+      <input type="submit" value="Add New User" />
+    </form>
+    <ul class='users'></ul>
+    
+    <script>
+      var apiUrl = 'http://cc.local/'
+      var form = document.querySelector('form')
+
+      var username = document.getElementById('username')
+      var email = document.getElementById('email')
+      var age = document.getElementById('age')
+      var designation = document.getElementById('designation')
+
+      var users = document.querySelector('.users')
+      form.addEventListener("submit", create)
+      
+      function create(event) {
+        event.preventDefault()
+        fetch(apiUrl+"api/create.php", {
+          method: 'POST',
+          body: JSON.stringify({
+            name: username.value, 
+            email:  email.value,
+            age:  age.value,
+            designation:  designation.value
+          })
+        }).then(function(response) {
+          alert("user added.");
+          location.reload();
+        })
+      }
+
+      function update(event) {
+        var id = event.target.getAttribute("data-id")
+        fetch(apiUrl + "/" + id + ".json", {
+          method: 'PATCH',
+          body: JSON.stringify({
+            text: event.target.innerText
+          })
+        }).then(function(response) {
+          response.json().then(function(user) {
+            console.log(user)
+          })
+        })
+      }
+      
+      function remove(event) {
+        event.preventDefault()
+        var id = event.target.getAttribute("data-id")
+        fetch(apiUrl + "api/delete.php", {
+          method: 'DELETE',
+          body: JSON.stringify({
+            id: id
+          })
+        }).then(function() {
+          users.removeChild(event.target.parentNode)
+        })
+      }
+      
+      function li(user) {
+        var l = document.createElement("li")
+        var span = document.createElement("span")
+        span.setAttribute("data-id", user.id)
+        span.innerHTML = "<a href='"+apiUrl+"edit.html?id="+user.id+"' target='_blank'>"+user.name+"</a>"
+        span.addEventListener("blur", update)
+        l.appendChild(span)
+        var a = document.createElement("a")
+        a.innerHTML = '&times;'
+        a.addEventListener("click", remove)
+        a.setAttribute("data-id", user.id)
+        l.appendChild(a)
+        users.appendChild(l)
+      }
+
+     
+      fetch(apiUrl+'api/read.php').then(function(response) {
+        response.json().then(function(users) {
+          users.forEach(li)
+        })
+      })
+    </script>
+  </body>
+</html>

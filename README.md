@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19;
 
 2. Setup the db connection from config/database.php
-3. Change the value of js variable apiUrl into your root url from /front.html and /edit.html
-4. Run yourRootURL/front.html from the browser
+3. Change the value of js variable apiUrl into your root url from /index.html and /edit.html
+4. Run yourRootURL from the browser
 
 ## PHP CRUD API
 * `GET -http://cc.local/api/read.php` Fetch ALL Records

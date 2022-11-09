@@ -13,9 +13,6 @@
     $stmt = $items->getUsers();
     $itemCount = $stmt->rowCount();
 
-
-    //echo json_encode($itemCount);
-
     if($itemCount > 0){
         
         $userArr = array();

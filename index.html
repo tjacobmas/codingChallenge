@@ -92,7 +92,6 @@
         users.appendChild(l)
       }
 
-     
       fetch(apiUrl+'api/read.php').then(function(response) {
         response.json().then(function(users) {
           users.forEach(li)

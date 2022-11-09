@@ -1,6 +1,6 @@
 <?php
     include_once 'header.php';
-    
+
     $user = new User($db);
 
     $data = json_decode(file_get_contents("php://input"));
@@ -12,8 +12,8 @@
     $user->created = date('Y-m-d H:i:s');
     
     if($user->createUser()){
-        echo 'User created successfully.';
+        echo json_encode(['status' => 'success', 'message' => 'User created successfully.']);
     } else{
-        echo 'User could not be created.';
+        echo json_encode(['status' => 'failed', 'message' => 'User could not be created.']);
     }
 ?>

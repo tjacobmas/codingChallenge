@@ -87,7 +87,6 @@
         var span1 = document.createElement("span")
         span1.setAttribute("data-id", user.id)
         span1.setAttribute("id", "userName"+user.id)
-        //span.innerHTML = "<a href='"+apiUrl+"edit.html?id="+user.id+"' target='_blank'>"+user.name+"</a>"
         span1.innerHTML = "<b>"+user.name+"</b>"
         span1.setAttribute("contenteditable", true)
         span1.addEventListener("blur", update)
@@ -139,7 +138,6 @@
 
       }
     
-
       function update(event) {
         event.preventDefault()
 
@@ -150,19 +148,16 @@
         var designation = document.getElementById("designation"+id).innerHTML
         
         fetch(apiUrl+"api/update.php", {
-        method: 'PATCH',
-        body: JSON.stringify({
-            id: id,
-            name: username, 
-            email: email,
-            age: age,
-            designation:  designation
-        })
-        }).then(function(response) {
-            //alert("user updated.");
+          method: 'PATCH',
+          body: JSON.stringify({
+              id: id,
+              name: username, 
+              email: email,
+              age: age,
+              designation:  designation
+          })
         })
       }
-
 
       fetch(apiUrl+'api/read.php').then(function(response) {
         response.json().then(function(users) {

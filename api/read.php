@@ -6,11 +6,7 @@
     $userCount = $stmt->rowCount();
 
     if($userCount > 0){
-        
         $userArr = array();
-        $userArr["body"] = array();
-        $userArr["itemCount"] = $userCount;
-
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $e = array(
@@ -22,14 +18,12 @@
                 "created" => $created
             );
 
-            array_push($userArr["body"], $e);
+            array_push($userArr, $e);
         } 
-        echo json_encode($userArr["body"]);
+        echo json_encode($userArr);
     }
     else{
         http_response_code(404);
-        echo json_encode(
-            array("message" => "No record found.")
-        );
+        echo json_encode(['status' => 'failed', 'message' => 'No record found.']);
     }
 ?>

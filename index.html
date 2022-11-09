@@ -80,18 +80,89 @@
       
       function li(user) {
         var l = document.createElement("li")
-        var span = document.createElement("span")
-        span.setAttribute("data-id", user.id)
-        span.innerHTML = "<a href='"+apiUrl+"edit.html?id="+user.id+"' target='_blank'>"+user.name+"</a>"
-        span.addEventListener("blur", update)
-        l.appendChild(span)
+
+        var label1 = document.createElement("span")
+        label1.innerHTML = "UserName: " 
+        l.appendChild(label1)
+        var span1 = document.createElement("span")
+        span1.setAttribute("data-id", user.id)
+        span1.setAttribute("id", "userName"+user.id)
+        //span.innerHTML = "<a href='"+apiUrl+"edit.html?id="+user.id+"' target='_blank'>"+user.name+"</a>"
+        span1.innerHTML = "<b>"+user.name+"</b>"
+        span1.setAttribute("contenteditable", true)
+        span1.addEventListener("blur", update)
+        l.appendChild(span1)
+        
+        var label2 = document.createElement("span")
+        label2.innerHTML = " &nbsp;&nbsp;Email: " 
+        l.appendChild(label2)
+        var span2 = document.createElement("span")
+        span2.setAttribute("data-id", user.id)
+        span2.setAttribute("id", "email"+user.id)
+        span2.innerHTML = "<b>"+user.email+"</b>"
+        span2.setAttribute("contenteditable", true)
+        span2.addEventListener("blur", update)
+        l.appendChild(span2)
+
+        var label3 = document.createElement("span")
+        label3.innerHTML = " &nbsp;&nbsp;Age: " 
+        l.appendChild(label3)
+        var span3 = document.createElement("span")
+        span3.setAttribute("data-id", user.id)
+        span3.setAttribute("id", "age"+user.id)
+        span3.innerHTML = "<b>"+user.age+"</b>"
+        span3.setAttribute("contenteditable", true)
+        span3.addEventListener("blur", update)
+        l.appendChild(span3)
+
+        var label4 = document.createElement("span")
+        label4.innerHTML = " &nbsp;&nbsp;Position: " 
+        l.appendChild(label4)
+        var span4 = document.createElement("span")
+        span4.setAttribute("data-id", user.id)
+        span4.setAttribute("id", "designation"+user.id)
+        span4.innerHTML = "<b>"+user.designation+"</b>"
+        span4.setAttribute("contenteditable", true)
+        span4.addEventListener("blur", update)
+        l.appendChild(span4)
+
         var a = document.createElement("a")
         a.innerHTML = '&times;'
         a.addEventListener("click", remove)
         a.setAttribute("data-id", user.id)
         l.appendChild(a)
         users.appendChild(l)
+
+        var form = document.createElement("form")
+        var unInput = document.createElement("input")
+        unInput.setAttribute("id", 'unIput'+user.id)
+
       }
+    
+
+      function update(event) {
+        event.preventDefault()
+
+        var id = event.target.getAttribute("data-id")
+        var username = document.getElementById("userName"+id).innerHTML
+        var email = document.getElementById("email"+id).innerHTML
+        var age = document.getElementById("age"+id).innerHTML
+        var designation = document.getElementById("designation"+id).innerHTML
+        
+        fetch(apiUrl+"api/update.php", {
+        method: 'PATCH',
+        body: JSON.stringify({
+            id: id,
+            name: username, 
+            email: email,
+            age: age,
+            designation:  designation
+        })
+        }).then(function(response) {
+            //alert("user updated.");
+        })
+      }
+
 
       fetch(apiUrl+'api/read.php').then(function(response) {
         response.json().then(function(users) {

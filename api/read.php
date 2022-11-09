@@ -1,23 +1,15 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    
-    include_once '../config/database.php';
-    include_once '../class/users.php';
+    include_once 'header.php';
 
-    $database = new Database();
-    $db = $database->getConnection();
+    $user = new User($db);
+    $stmt = $user->getUsers();
+    $userCount = $stmt->rowCount();
 
-    $items = new User($db);
-
-    $stmt = $items->getUsers();
-    $itemCount = $stmt->rowCount();
-
-    if($itemCount > 0){
+    if($userCount > 0){
         
         $userArr = array();
         $userArr["body"] = array();
-        $userArr["itemCount"] = $itemCount;
+        $userArr["itemCount"] = $userCount;
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);

@@ -1,31 +1,21 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    include_once 'header.php';
 
-    include_once '../config/database.php';
-    include_once '../class/users.php';
+    $user = new User($db);
 
-    $database = new Database();
-    $db = $database->getConnection();
-
-    $item = new User($db);
-
-    $item->id = isset($_GET['id']) ? $_GET['id'] : die();
+    $user->id = isset($_GET['id']) ? $_GET['id'] : die();
   
-    $item->getSingleUser();
+    $user->getSingleUser();
 
-    if($item->name != null){
+    if($user->name != null){
         // create array
         $emp_arr = array(
-            "id" =>  $item->id,
-            "name" => $item->name,
-            "email" => $item->email,
-            "age" => $item->age,
-            "designation" => $item->designation,
-            "created" => $item->created
+            "id" =>  $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "age" => $user->age,
+            "designation" => $user->designation,
+            "created" => $user->created
         );
       
         http_response_code(200);
